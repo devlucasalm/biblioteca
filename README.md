@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Biblioteca
 
-## Getting Started
+Sistema web de biblioteca feito com Next.js, Tailwind CSS e Supabase.
 
-First, run the development server:
+## Integrantes
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Nome 1
+- Nome 2
+- Nome 3
+- Nome 4
+
+## Links
+
+- Site no ar: _colocar o link da Vercel_
+- GitHub: _colocar o link do repositório_
+
+## Funcionalidades
+
+- **3 CRUDs:** Livros, Autores e Empréstimos
+- **Banco de dados (Supabase / PostgreSQL):** tabelas `autores`, `livros`, `emprestimos` e `perfis`
+- **Autenticação:** login e cadastro com e-mail e senha (Supabase Auth)
+- **Autorização:** dois perfis
+  - `admin`: cria, edita e exclui livros e autores
+  - `aluno`: vê livros e autores e gerencia os próprios empréstimos
+- **Estilização e responsividade** com Tailwind CSS
+
+## Tecnologias
+
+- Next.js (App Router) e React
+- TypeScript
+- Tailwind CSS
+- Supabase (Auth e banco de dados)
+- Vercel (deploy)
+
+## Estrutura de pastas
+
+```
+app/
+  login/          página de login e cadastro
+  livros/         CRUD de livros
+  autores/        CRUD de autores
+  emprestimos/    CRUD de empréstimos
+components/       componentes (formulários, listas e menu)
+lib/              cliente do Supabase, tipos e hook useUsuario
+supabase/
+  migrations/     SQL das tabelas e das permissões
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Como rodar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Instale as dependências:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   npm install
+   ```
 
-## Learn More
+2. Crie um projeto no [Supabase](https://supabase.com).
 
-To learn more about Next.js, take a look at the following resources:
+3. No **SQL Editor** do Supabase, rode os arquivos de `supabase/migrations` na ordem:
+   `0001_tabelas_iniciais.sql` e depois `0002_perfis_e_permissoes.sql`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Crie o arquivo `.env` na raiz com os dados de **Project Settings → API**:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=https://SEU-PROJETO.supabase.co
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sua-chave-publica
+   ```
 
-## Deploy on Vercel
+5. Rode o projeto:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Abra [http://localhost:3000](http://localhost:3000).
+
+## Como virar admin
+
+Crie sua conta pela tela de login e depois rode no SQL Editor do Supabase:
+
+```sql
+update perfis set role = 'admin' where email = 'seu@email.com';
+```
+
+## Deploy
+
+1. Suba o código para o GitHub.
+2. Na [Vercel](https://vercel.com), importe o repositório.
+3. Em **Environment Variables**, cadastre `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
+4. Clique em **Deploy**.
